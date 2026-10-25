@@ -5,7 +5,11 @@ export const { auth, signIn, signOut, store, isAuthenticated } = convexAuth({
   providers: [
     Password({
       profile: (params) => {
-        const role = params.role === "rider" ? "rider" : "student";
+        const role =
+          params.role === "rider" || params.role === "admin"
+            ? params.role
+            : "student";
+
         return {
           ...(typeof params.name === "string" ? { name: params.name } : {}),
           email: String(params.email).trim().toLowerCase(),
